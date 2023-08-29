@@ -1,0 +1,65 @@
+{% extends 'store/base.html' %}
+
+{% load i18n %}
+{% load account socialaccount %}
+{% load static %}
+{% comment %} {% load widget_tweaks %} {% endcomment %}
+{% block head_title %}
+    {% trans "Signup" %}
+{% endblock head_title %}
+
+{% block content %}
+<section class="login"> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> 
+
+  <div class="signin">
+    <div class="content">
+      <h2>Sign Up</h2>
+      <div class="form">
+        <form method="POST">
+          {% csrf_token %}
+          <div class="inputBox">
+            {{ form.username }}
+            <i>Username</i>
+            {% if form.username.errors %}
+            <p class="error">{{ form.username.errors }}</p>
+            {% endif %}
+          </div>
+          <div class="inputBox">
+            {{ form.email }}
+            <i>Email</i>
+            {% if form.email.errors %}
+            <p class="error">{{ form.email.errors }}</p>
+            {% endif %}
+          </div>
+          <div class="inputBox">
+            {{ form.password1 }}
+            <i>Password</i>
+            {% if form.password1.errors %}
+            <p class="error">{{ form.password1.errors }}</p>
+            {% endif %}
+          </div>
+          <div class="inputBox">
+            {{ form.password2 }}
+            <i>Confirm Password</i>
+            {% if form.password2.errors %}
+            <p class="error ">{{ form.password2.errors }}</p>
+            {% endif %}
+          </div>
+          <div class="links">
+            <a href="{% url 'account_reset_password' %}">Forgot Password</a>
+            <a href="{{ login_url }}">Sign In</a>
+          </div>
+          <div class="inputBox">
+            <input type="submit" value="Sign Up">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  
+
+</section>
+
+  {% comment %} {% include 'store/footer.html' %} {% endcomment %}
+{% endblock content %}

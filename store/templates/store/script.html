@@ -1,0 +1,20 @@
+{% load static %}
+{% load compress %}
+
+<!-- MDB -->
+<script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"
+></script>
+{% compress js %}
+
+
+<!-- jQuery Plugins -->
+<script src="{% static 'js/jquery.min.js' %}?v={{ STATIC_VERSION }}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}?v={{ STATIC_VERSION }}"></script>
+<script src="{% static 'js/slick.min.js' %}?v={{ STATIC_VERSION }}"></script>
+<script src="{% static 'js/nouislider.min.js' %}?v={{ STATIC_VERSION }}"></script>
+<script src="{% static 'js/jquery.zoom.min.js' %}?v={{ STATIC_VERSION }}"></script>
+<script src="{% static 'js/main.js' %}?v={{ STATIC_VERSION }}"></script>
+
+{% endcompress %}

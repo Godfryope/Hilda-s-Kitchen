@@ -1,0 +1,197 @@
+{% extends 'store/base.html' %} 
+{% load humanize %} 
+{% block content %} 
+{% include 'store/header.html' %} {% include 'store/navigation.html' %}
+
+<!-- Include Paystack JavaScript library -->
+<script src="https://js.paystack.co/v1/inline.js"></script>
+
+<div class="cart2">
+<div class="cart">
+	<section class="h-100" style="background-color: #eee;">
+		<div class="container-flow h-100">
+		  <div class="row d-flex justify-content-center align-items-center h-100">
+			<div class="col">
+			  <div class="card shadow-0">
+				<div class="card-body p-4">
+	  
+				  <div class="row">
+	  
+					<div class="">
+					  <h5 class="mb-3"><a href="{% url 'product_list' %}" class="text-body"><i
+							class="fas fa-long-arrow-alt-left me-2"></i>Continue shopping</a></h5>
+					  <hr>
+	  
+					  <div class="d-flex justify-content-between align-items-center mb-4">
+						<div>
+						  <p class="mb-1">Shopping cart</p>
+						  <p class="mb-0">You have {{ cart_items_count }} items in your cart</p>
+						</div>
+						<div>
+						  <p class="mb-0"><span class="text-muted">Sort by:</span> <a href="#!"
+							  class="text-body">price <i class="fas fa-angle-down mt-1"></i></a></p>
+						</div>
+					  </div>
+	  
+					  <form method="post">
+						{% csrf_token %}
+						{% for cart_item in cart_items %}
+						<div class="card mb-3">
+						  <div class="card-body">
+							<div class="justify-content-between">
+							  <div class="d-flex flex-row align-items-center">
+								<div>
+								  <img src="{{ cart_item.product.images.first.image.url }}"
+									class="img-fluid rounded-3" alt="Shopping item" style="width: 65px; max-height:65px;">
+								</div>
+								<div class="ms-3">
+								  <h5>{{ cart_item.product.name }}</h5>
+								  <p class="small mb-0">{{ cart_item.product.details }}</p>
+								</div>
+							  </div>
+							  <div class="mt-5 d-flex flex-row align-items-center">
+								<div style="width: 40px;">
+								  <h5 class="fw-normal mb-0">{{ cart_item.quantity }} x </h5>
+								</div>
+								<div style="width: 80px;">
+								  <h5 class="mb-0">&#8358;{{ cart_item.product.discount_price|intcomma }}</h5>
+								</div>
+								<input type="hidden" name="item_id" value="{{ cart_item.id }}" />
+								<i class="fas fa-heart text-warning mx-3"></i>
+								<button onclick="return confirm('Are you sure you want to remove this item from your cart?')" type="submit" class="btn btn-link text-muted"><i class="fas fa-trash-alt mx-3 text-danger"></i></button>
+							  </div>
+							</div>
+						  </div>
+						</div>
+						{% endfor %}
+					  </form>
+	  
+					</div>
+	  
+				  </div>
+	  
+				</div>
+			  </div>
+			</div>
+		  </div>
+		  
+		  <div class="">
+			<div style="background:#008080;" class="card text-white rounded-3">
+				<div class="card-body px-5 mx-5">
+					<div class="d-flex justify-content-between align-items-center mb-4">
+						<h5 class="mb-0 text-white"></h5>
+					</div>
+
+					<!-- Paystack Payment Form -->
+					<form id="paymentForm">
+						<div class="form-outline form-white mb-4">
+						  <input type="email" id="email-address" class="form-control form-control-lg" required />
+						  <label class="form-label" for="email">Email Address</label>
+						</div>
+						<input type="hidden" id="amount" value="{{ total_price|intcomma }}" />
+						<div class="form-outline form-white mb-4">
+						  <input type="text" id="first-name" class="form-control form-control-lg" />
+						  <label class="form-label" for="first-name">First Name</label>
+						</div>
+						<div class="form-outline form-white mb-4">
+						  <input type="text" id="last-name" class="form-control form-control-lg" />
+						  <label class="form-label" for="last-name">Last Name</label>
+						</div>
+					  
+						<hr class="my-4">
+					  
+						<div class="d-flex justify-content-between">
+						  <p class="mb-2">Subtotal</p>
+						  <p class="mb-2">&#8358;{{ total_price|intcomma }}</p>
+						</div>
+					  
+						<div class="d-flex justify-content-between">
+						  <p class="mb-2">Shipping</p>
+						  <p class="mb-2">&#8358;0</p>
+						</div>
+					  
+						<div class="d-flex justify-content-between mb-4">
+						  <p class="mb-2">Total (Incl. taxes)</p>
+						  <p class="mb-2">&#8358;{{ total_price|intcomma }}</p>
+						</div>
+					  
+						<button type="submit" style="background: Coral;" class="btn btn-block btn-lg" onclick="payWithPaystack()">
+						  <div class="d-flex justify-content-between">
+							<span>&#8358;{{ total_price|intcomma }}</span>
+							<span>Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+						  </div>
+						</button>
+					  </form>								  
+				</div>
+			</div>
+		</div>
+		</div>
+	  </section>
+</div>
+</div>
+{% comment %} {% include 'store/newsletter.html' %} {% endcomment %}
+
+{% include 'store/footer.html' %} 
+<script>
+    // Your JavaScript code goes here
+    const paymentForm = document.getElementById('paymentForm');
+    const amountInput = document.getElementById('amount');
+
+    // Add the event listener to the form submission
+    paymentForm.addEventListener("submit", payWithPaystack, false);
+
+    function payWithPaystack(e) {
+        e.preventDefault();
+
+        // Get the form values
+        const email = document.getElementById("email-address").value;
+        const amount = parseFloat(amountInput.value.replace(/,/g, '')); // Remove commas and parse to a float
+
+        // Check if the amount is valid
+        if (isNaN(amount) || amount <= 0) {
+            alert('Please enter a valid amount.');
+            return;
+        }
+
+        // Prepare payment data
+        const paymentData = {
+            key: 'pk_live_e527c516ba54e6fdd3b86a668e0ec0f311734edd', // Replace with your public key
+            email: email,
+            amount: amount * 100, // Paystack requires amount in kobo (smallest currency unit)
+            ref: '' + Math.floor(Math.random() * 1000000000 + 1), // generates a pseudo-unique reference
+            {% comment %} onClose: function () {
+                alert('Window closed.');
+            }, {% endcomment %}
+            callback: function (response) {
+                let message = 'Payment complete! Reference: ' + response.reference;
+                alert(message); 
+				const apiUrl = '{% url "payment_status" %}'; 
+				fetch(apiUrl, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(response), // Sending the entire response object to your server
+				})
+				.then(response => response.json())
+				.then(data => {
+					// Handle the API response from your server
+					console.log('API response:', data);
+				})
+				.catch(error => {
+					// Handle any errors that occurred during the API request
+					console.error('Error making API request:', error);
+				});
+            }
+        };
+
+        // Initialize Paystack inline payment
+        const handler = PaystackPop.setup(paymentData);
+        handler.openIframe();
+    }
+</script>
+
+
+
+{% endblock content %}
+

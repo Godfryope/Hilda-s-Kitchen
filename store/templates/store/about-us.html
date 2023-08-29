@@ -1,0 +1,50 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'store/header.html' %} 
+{% include 'store/navigation.html' %}
+<div style="border-bottom: 3px solid #008080;">
+    <div class="container">
+        <section  class="pb-4 mb-5 my-5">
+        <div class="row gx-5">
+            <div class="col-md-4 mb-4">
+            <div
+                class="bg-image hover-overlay ripple shadow-2-strong rounded-5"
+                data-mdb-ripple-color="light"
+            >
+                <img
+                src="{% static 'img/hilda.jpg' %}"
+                class="img-fluid"
+                />
+                <a href="#!">
+                <div
+                    class="mask"
+                    style="background-color: rgba(251, 251, 251, 0.15)"
+                ></div>
+                </a>
+            </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+            <span class="badge bg-danger px-2 py-1 shadow-1-strong mb-3"
+                >Chef's Angle</span
+            >
+            <h4><strong>About Hilda Baci: Igniting Passion, Achieving Excellence</strong></h4>
+            <p class="text-muted">
+                Welcome to Hilda Baci, where culinary brilliance, fearless determination, and unmatched achievement intertwine. 
+                <p class="text-muted">Born on September 20, 1996, Hilda Baci is a symbol of culinary innovation, known for her expertise and the Guinness World Record she set for the longest cooking marathon – an incredible 93 hours and 11 minutes.</p>
+
+                <p class="text-muted">Hilda's impact goes beyond the kitchen; she seamlessly transitioned into acting, gracing films like "A Walk on Water" and "Mr & Mrs Robert." Her journey epitomizes inspiration, showcasing the power of unwavering passion and perseverance. </p>
+                <p class="text-muted">At Hilda Baci, we celebrate audacious dreamers, tireless doers, and resolute believers, sharing Hilda's story to encourage embracing talents, conquering challenges, and redefining limits.</p> 
+                <p class="text-muted">Join us in celebrating Hilda Baci's extraordinary journey – a testament that boundaries are meant to be challenged and excellence knows no bounds.</p>
+            </p>
+            {% comment %} <button type="button" class="btn btn-primary">Read more</button> {% endcomment %}
+            </div>
+        </div>
+        </section>
+    </div>
+</div>
+
+{% include 'store/footer.html' %}
+{% endblock content %}

@@ -1,0 +1,69 @@
+{% load static %}
+
+<!-- HEADER -->
+<header>
+    {% include 'store/top-header.html' %}
+
+    <!-- MAIN HEADER -->
+    <div id="header">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <!-- LOGO -->
+                <div class="col-md-3">
+                    <div class="header-logo">
+                        <a href="/" class="logo">
+                            <img width="60" height="60" src="{% static 'img/logo.png' %}" alt="">
+                        </a>
+                    </div>
+                </div>
+                <!-- /LOGO -->
+
+                {% include 'store/search.html' %}
+
+
+                <!-- ACCOUNT -->
+                <div class="col-md-3 clearfix">
+                    <div class="header-ctn">
+                        <!-- Wishlist -->
+                        <div>
+                            <a href="{% url 'wishlist' %}">
+                                <i class="fa fa-heart-o"></i>
+                                <span>Your Wishlist</span>
+                                <div class="qty">{{ wishlist_items_count }}</div>
+                            </a>
+                        </div>
+                        <!-- /Wishlist -->
+                        <!-- Cart -->
+                        <div class="dropdown">
+                            <a href="{% url 'cart' %}">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>Your Cart</span>
+                                <div class="qty">{{ cart_items_count }}</div>
+                            </a>
+                        </div>
+                        <!-- /Cart -->
+
+
+
+
+                        <!-- Menu Toogle -->
+                        <div class="menu-toggle">
+                            <a href="#">
+                                <i class="fa fa-bars"></i>
+                                <span>Menu</span>
+                            </a>
+                        </div>
+                        <!-- /Menu Toogle -->
+                    </div>
+                </div>
+                <!-- /ACCOUNT -->
+            </div>
+            <!-- row -->
+        </div>
+        <!-- container -->
+    </div>
+    <!-- /MAIN HEADER -->
+</header>
+<!-- /HEADER -->
